@@ -3,12 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Inventory Management system</title>
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>HELLO TO ALL!!</h1>
-    <p>HI </p>
+    <header>
+        <h1>Inventory Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#orders">Orders</a></li>
+                <li><a href="#suppliers">Suppliers</a></li>
+                <li><a href="#reports">Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside>
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#addProduct">Add Product</a></li>
+                <li><a href="#addOrder">Create Order</a></li>
+                <li><a href="#addSupplier">Add Supplier</a></li>
+            </ul>
+        </aside>
+
+        <main>
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="metrics">
+                    <div class="metric">Total Products: <span id="totalProducts">0</span></div>
+                    <div class="metric">Low Stock Alerts: <span id="lowStockAlerts">0</span></div>
+                </div>
+            </section>
+
+            <section id="products">
+                <h2>Products</h2>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>SKU</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Product rows will be dynamically added here -->
+                    </tbody>
+                </table>
+                <button id="addProductBtn">Add New Product</button>
+            </section>
+
+            <section id="orders">
+                <h2>Orders</h2>
+                <table id="orderTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Date</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Order rows will be dynamically added here -->
+                    </tbody>
+                </table>
+                <button id="addOrderBtn">Create New Order</button>
+            </section>
+
+            <section id="suppliers">
+                <h2>Suppliers</h2>
+                <table id="supplierTable">
+                    <thead>
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Contact Info</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Supplier rows will be dynamically added here -->
+                    </tbody>
+                </table>
+                <button id="addSupplierBtn">Add New Supplier</button>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Inventory Management System</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
