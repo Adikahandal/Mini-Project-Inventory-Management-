@@ -6,10 +6,19 @@ body {
 }
 
 header {
+
+    display: flex;
+    justify-content: space-between;
     background: #35424a;
     color: white;
-    padding: 10px 0;
+    padding: 25px;
     text-align: center;
+}
+
+header h1 {
+    height: inherit;
+    margin: auto 0;
+    text-shadow: 4px 4px 12px black;
 }
 
 nav ul {
@@ -24,6 +33,11 @@ nav ul li {
 
 nav ul li a {
     color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    color: rgb(207, 206, 206);
     text-decoration: none;
 }
 
