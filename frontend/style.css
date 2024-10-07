@@ -6,10 +6,9 @@ body {
 }
 
 header {
-
     display: flex;
     justify-content: space-between;
-    background: #35424a;
+    background: #33383b;
     color: white;
     padding: 25px;
     text-align: center;
@@ -36,9 +35,9 @@ nav ul li a {
     text-decoration: none;
 }
 
-nav ul li a:hover {
-    color: rgb(207, 206, 206);
-    text-decoration: none;
+nav ul li a:hover, nav ul li a.active {
+    color: #f4f4f4;
+    text-decoration: underline;
 }
 
 .container {
@@ -84,6 +83,14 @@ section {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+section h2 {
+    background: linear-gradient(156deg, #34444f, #60616c);
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    margin: -15px -15px 15px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -100,16 +107,23 @@ table th {
     color: white;
 }
 
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 button {
     background: #35424a;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
 }
 
 button:hover {
     background: #007bff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 footer {
@@ -117,4 +131,120 @@ footer {
     padding: 15px;
     background: #35424a;
     color: white;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Maximum width */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal Title */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #35424a; /* Use a color that matches your theme */
+}
+
+/* Modal Input Styles */
+.modal input[type="text"],
+.modal input[type="number"],
+.modal input[type="email"] {
+    width: 100%; /* Full width */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Submit Button */
+.modal button[type="submit"] {
+    background: #35424a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+.modal button[type="submit"]:hover {
+    background: #007bff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }

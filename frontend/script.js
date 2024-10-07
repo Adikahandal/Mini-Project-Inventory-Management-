@@ -1,106 +1,98 @@
 document.addEventListener("DOMContentLoaded", () => {
+    let products = [];
+    let currentEditIndex = -1;
+
     // Populate the product table
-    async function populateProductTable() {
-        try {
-            const response = await fetch("/api/products"); // Endpoint to fetch products
-            const products = await response.json();
+    function populateProductTable() {
+        const productTableBody = document.querySelector("#productTable tbody");
+        productTableBody.innerHTML = ""; // Clear existing rows
 
-            const productTableBody = document.querySelector("#productTable tbody");
-            productTableBody.innerHTML = ""; // Clear existing rows
+        products.forEach((product, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.sku}</td>
+                <td>${product.quantity}</td>
+                <td>$${product.price.toFixed(2)}</td>
+                <td>
+                    <button class="edit-btn" data-index="${index}">Edit</button> 
+                    <button class="delete-btn" data-index="${index}">Delete</button>
+                </td>
+            `;
+            productTableBody.appendChild(row);
+        });
 
-            products.forEach((product) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${product.name}</td>
-                    <td>${product.sku}</td>
-                    <td>${product.quantity}</td>
-                    <td>$${product.price.toFixed(2)}</td>
-                    <td>
-                        <button class="edit-btn" data-sku="${product.sku}">Edit</button> 
-                        <button class="delete-btn" data-sku="${product.sku}">Delete</button>
-                    </td>
-                `;
-                productTableBody.appendChild(row);
-            });
-
-            // Update dashboard statistics
-            document.getElementById("totalProducts").textContent = products.length;
-            document.getElementById("lowStockAlerts").textContent = products.filter(p => p.quantity < 5).length;
-
-        } catch (error) {
-            console.error("Error fetching products:", error);
-        }
+        // Update dashboard statistics
+        document.getElementById("totalProducts").textContent = products.length;
+        document.getElementById("lowStockAlerts").textContent = products.filter(p => p.quantity < 5).length;
     }
 
-    // Populate the orders table
-    async function populateOrderTable() {
-        try {
-            const response = await fetch("/api/orders"); // Endpoint to fetch orders
-            const orders = await response.json();
+    // Handle adding or editing products
+    function handleProductFormSubmit(event) {
+        event.preventDefault(); // Prevent form submission
 
-            const orderTableBody = document.querySelector("#orderTable tbody");
-            orderTableBody.innerHTML = ""; // Clear existing rows
+        const productName = document.getElementById("productName").value;
+        const sku = document.getElementById("sku").value;
+        const quantity = parseInt(document.getElementById("quantity").value);
+        const price = parseFloat(document.getElementById("price").value);
 
-            orders.forEach((order) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${order.id}</td>
-                    <td>${order.customerName}</td>
-                    <td>${order.date}</td>
-                    <td>$${order.totalAmount.toFixed(2)}</td>
-                    <td>${order.status}</td>
-                `;
-                orderTableBody.appendChild(row);
-            });
-
-        } catch (error) {
-            console.error("Error fetching orders:", error);
+        if (currentEditIndex === -1) {
+            // Add new product
+            products.push({ name: productName, sku, quantity, price });
+        } else {
+            // Edit existing product
+            products[currentEditIndex] = { name: productName, sku, quantity, price };
+            currentEditIndex = -1; // Reset edit index
         }
+
+        // Reset form fields
+        document.getElementById("productForm").reset();
+        document.getElementById("modalTitle").textContent = "Add New Product";
+        document.getElementById("productModal").style.display = "none";
+
+        populateProductTable();
     }
 
-    // Populate the suppliers table
-    async function populateSupplierTable() {
-        try {
-            const response = await fetch("/api/suppliers"); // Endpoint to fetch suppliers
-            const suppliers = await response.json();
+    // Handle edit button click
+    function handleEditButtonClick(index) {
+        const product = products[index];
+        document.getElementById("productName").value = product.name;
+        document.getElementById("sku").value = product.sku;
+        document.getElementById("quantity").value = product.quantity;
+        document.getElementById("price").value = product.price;
 
-            const supplierTableBody = document.querySelector("#supplierTable tbody");
-            supplierTableBody.innerHTML = ""; // Clear existing rows
+        currentEditIndex = index; // Set the current edit index
+        document.getElementById("modalTitle").textContent = "Edit Product";
+        document.getElementById("productModal").style.display = "block";
+    }
 
-            suppliers.forEach((supplier) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${supplier.name}</td>
-                    <td>${supplier.contactInfo}</td>
-                    <td>
-                        <button class="edit-btn" data-name="${supplier.name}">Edit</button> 
-                        <button class="delete-btn" data-name="${supplier.name}">Delete</button>
-                    </td>
-                `;
-                supplierTableBody.appendChild(row);
-            });
-
-        } catch (error) {
-            console.error("Error fetching suppliers:", error);
-        }
+    // Handle delete button click
+    function handleDeleteButtonClick(index) {
+        products.splice(index, 1); // Remove product from the array
+        populateProductTable();
     }
 
     // Event listener for buttons
     function handleButtonClicks() {
         document.addEventListener("click", (e) => {
-            if (e.target.classList.contains("edit-btn")) {
-                const id = e.target.dataset.sku || e.target.dataset.name;
-                alert(`Edit item: ${id}`);
+            if (e.target.id === "addProductBtn") {
+                currentEditIndex = -1; // Reset edit index for adding new product
+                document.getElementById("productForm").reset();
+                document.getElementById("modalTitle").textContent = "Add New Product";
+                document.getElementById("productModal").style.display = "block";
+            } else if (e.target.classList.contains("edit-btn")) {
+                const index = e.target.dataset.index;
+                handleEditButtonClick(index);
             } else if (e.target.classList.contains("delete-btn")) {
-                const id = e.target.dataset.sku || e.target.dataset.name;
-                alert(`Delete item: ${id}`);
+                const index = e.target.dataset.index;
+                handleDeleteButtonClick(index);
+            } else if (e.target.classList.contains("close")) {
+                document.getElementById("productModal").style.display = "none";
             }
         });
     }
 
-    // Initializing the tables and handling button clicks
-    populateProductTable();
-    populateOrderTable();
-    populateSupplierTable();
+    // Initializing event listeners and handling form submission
+    document.getElementById("productForm").addEventListener("submit", handleProductFormSubmit);
     handleButtonClicks();
 });
