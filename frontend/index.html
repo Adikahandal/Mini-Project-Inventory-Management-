@@ -21,15 +21,15 @@
             </ul>
         </nav>
     </header>
-    
+
 
     <div class="container">
         <aside>
             <h2>Quick Links</h2>
             <ul>
-                <li><a href="#addProduct">Add Product</a></li>
-                <li><a href="#addOrder">Create Order</a></li>
-                <li><a href="#addSupplier">Add Supplier</a></li>
+                <li id="quickAddProductLink">Add Product</li>
+                <li id="quickAddOrderLink">Create Order</li>
+                <li id="quickAddSupplierLink">Add Supplier</li>
                 <li><a href="login.html">Login</a></li> <!-- New Link -->
                 <li><a href="signup.html">Sign Up</a></li> <!-- New Link -->
             </ul>
@@ -107,7 +107,7 @@
             <li><a href="login.html">Login</a></li> <!-- New Link -->
             <li><a href="signup.html">Sign Up</a></li> <!-- New Link -->
         </ul>
-    </footer>    
+    </footer>
 
     <!-- Modal for adding/editing products -->
     <div id="productModal" class="modal">
@@ -128,49 +128,49 @@
         </div>
     </div>
     <!-- Add New Order Modal -->
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="orderModalTitle">Create New Order</h2>
-        <form id="orderForm">
-            <label for="orderNumber">Order Number</label>
-            <input type="text" id="orderNumber" name="orderNumber" required>
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="orderModalTitle">Create New Order</h2>
+            <form id="orderForm">
+                <label for="orderNumber">Order Number</label>
+                <input type="text" id="orderNumber" name="orderNumber" required>
 
-            <label for="orderProduct">Product</label>
-            <input type="text" id="orderProduct" name="orderProduct" required>
+                <label for="orderProduct">Product</label>
+                <input type="text" id="orderProduct" name="orderProduct" required>
 
-            <label for="orderQuantity">Quantity</label>
-            <input type="number" id="orderQuantity" name="orderQuantity" required>
+                <label for="orderQuantity">Quantity</label>
+                <input type="number" id="orderQuantity" name="orderQuantity" required>
 
-            <label for="orderDate">Order Date</label>
-            <input type="date" id="orderDate" name="orderDate" required>
+                <label for="orderDate">Order Date</label>
+                <input type="date" id="orderDate" name="orderDate" required>
 
-            <button type="submit">Save Order</button>
-        </form>
+                <button type="submit">Save Order</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- Add New Supplier Modal -->
-<div id="supplierModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="supplierModalTitle">Add New Supplier</h2>
-        <form id="supplierForm">
-            <label for="supplierName">Supplier Name</label>
-            <input type="text" id="supplierName" name="supplierName" required>
+    <!-- Add New Supplier Modal -->
+    <div id="supplierModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="supplierModalTitle">Add New Supplier</h2>
+            <form id="supplierForm">
+                <label for="supplierName">Supplier Name</label>
+                <input type="text" id="supplierName" name="supplierName" required>
 
-            <label for="supplierContact">Contact Number</label>
-            <input type="text" id="supplierContact" name="supplierContact" required>
+                <label for="supplierContact">Contact Number</label>
+                <input type="text" id="supplierContact" name="supplierContact" required>
 
-            <label for="supplierEmail">Email</label>
-            <input type="email" id="supplierEmail" name="supplierEmail" required>
+                <label for="supplierEmail">Email</label>
+                <input type="email" id="supplierEmail" name="supplierEmail" required>
 
-            <button type="submit">Save Supplier</button>
-        </form>
+                <button type="submit">Save Supplier</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- New Order and Supplier Buttons
+    <!-- New Order and Supplier Buttons
 <button id="addOrderBtn">Create New Order</button>
 <button id="addSupplierBtn">Add New Supplier</button> -->
 

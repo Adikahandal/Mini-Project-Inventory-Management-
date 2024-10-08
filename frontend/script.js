@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("orderModal").style.display = "none";
 
         console.log("Orders:", orders); // Optional: Print orders to console for testing
+        populateOrderTable(); // Call to populate orders table
     }
 
     // New: Handle Supplier Form Submit
@@ -82,6 +83,40 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("supplierModal").style.display = "none";
 
         console.log("Suppliers:", suppliers); // Optional: Print suppliers to console for testing
+        populateSupplierTable(); // Call to populate suppliers table
+    }
+
+    // Function to populate order table
+    function populateOrderTable() {
+        const orderTableBody = document.querySelector("#orderTable tbody");
+        orderTableBody.innerHTML = ""; 
+
+        orders.forEach((order) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${order.orderNumber}</td>
+                <td>${order.orderProduct}</td>
+                <td>${order.orderQuantity}</td>
+                <td>${order.orderDate}</td>
+            `;
+            orderTableBody.appendChild(row);
+        });
+    }
+
+    // Function to populate supplier table
+    function populateSupplierTable() {
+        const supplierTableBody = document.querySelector("#supplierTable tbody");
+        supplierTableBody.innerHTML = ""; 
+
+        suppliers.forEach((supplier) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${supplier.supplierName}</td>
+                <td>${supplier.supplierContact}</td>
+                <td>${supplier.supplierEmail}</td>
+            `;
+            supplierTableBody.appendChild(row);
+        });
     }
 
     // Handle edit button click for products
@@ -103,33 +138,35 @@ document.addEventListener("DOMContentLoaded", () => {
         populateProductTable();
     }
 
+    // Event listener for modal buttons and quick links
     // Event listener for modal buttons
-    function handleButtonClicks() {
-        document.addEventListener("click", (e) => {
-            if (e.target.id === "addProductBtn") {
-                currentEditIndex = -1; 
-                document.getElementById("productForm").reset();
-                document.getElementById("modalTitle").textContent = "Add New Product";
-                document.getElementById("productModal").style.display = "block";
-            } else if (e.target.id === "addOrderBtn") {
-                document.getElementById("orderForm").reset();
-                document.getElementById("orderModalTitle").textContent = "Create New Order";
-                document.getElementById("orderModal").style.display = "block";
-            } else if (e.target.id === "addSupplierBtn") {
-                document.getElementById("supplierForm").reset();
-                document.getElementById("supplierModalTitle").textContent = "Add New Supplier";
-                document.getElementById("supplierModal").style.display = "block";
-            } else if (e.target.classList.contains("edit-btn")) {
-                const index = e.target.dataset.index;
-                handleEditButtonClick(index);
-            } else if (e.target.classList.contains("delete-btn")) {
-                const index = e.target.dataset.index;
-                handleDeleteButtonClick(index);
-            } else if (e.target.classList.contains("close")) {
-                e.target.closest(".modal").style.display = "none";
-            }
-        });
-    }
+function handleButtonClicks() {
+    document.addEventListener("click", (e) => {
+        if (e.target.id === "addProductBtn" || e.target.id === "quickAddProductLink") {
+            currentEditIndex = -1; 
+            document.getElementById("productForm").reset();
+            document.getElementById("modalTitle").textContent = "Add New Product";
+            document.getElementById("productModal").style.display = "block";
+        } else if (e.target.id === "addOrderBtn" || e.target.id === "quickAddOrderLink") {
+            document.getElementById("orderForm").reset();
+            document.getElementById("orderModalTitle").textContent = "Create New Order";
+            document.getElementById("orderModal").style.display = "block";
+        } else if (e.target.id === "addSupplierBtn" || e.target.id === "quickAddSupplierLink") {
+            document.getElementById("supplierForm").reset();
+            document.getElementById("supplierModalTitle").textContent = "Add New Supplier";
+            document.getElementById("supplierModal").style.display = "block";
+        } else if (e.target.classList.contains("edit-btn")) {
+            const index = e.target.dataset.index;
+            handleEditButtonClick(index);
+        } else if (e.target.classList.contains("delete-btn")) {
+            const index = e.target.dataset.index;
+            handleDeleteButtonClick(index);
+        } else if (e.target.classList.contains("close")) {
+            e.target.closest(".modal").style.display = "none";
+        }
+    });
+}
+
 
     document.getElementById("productForm").addEventListener("submit", handleProductFormSubmit);
     document.getElementById("orderForm").addEventListener("submit", handleOrderFormSubmit);
