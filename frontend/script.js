@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     let products = [];
+    let orders = [];
+    let suppliers = [];
     let currentEditIndex = -1;
 
-    // Populate the product table
+    // Function to populate product table
     function populateProductTable() {
         const productTableBody = document.querySelector("#productTable tbody");
-        productTableBody.innerHTML = ""; // Clear existing rows
+        productTableBody.innerHTML = ""; 
 
         products.forEach((product, index) => {
             const row = document.createElement("tr");
@@ -22,14 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
             productTableBody.appendChild(row);
         });
 
-        // Update dashboard statistics
         document.getElementById("totalProducts").textContent = products.length;
         document.getElementById("lowStockAlerts").textContent = products.filter(p => p.quantity < 5).length;
     }
 
-    // Handle adding or editing products
+    // Function to handle product form submit
     function handleProductFormSubmit(event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); 
 
         const productName = document.getElementById("productName").value;
         const sku = document.getElementById("sku").value;
@@ -37,15 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const price = parseFloat(document.getElementById("price").value);
 
         if (currentEditIndex === -1) {
-            // Add new product
             products.push({ name: productName, sku, quantity, price });
         } else {
-            // Edit existing product
             products[currentEditIndex] = { name: productName, sku, quantity, price };
-            currentEditIndex = -1; // Reset edit index
+            currentEditIndex = -1;
         }
 
-        // Reset form fields
         document.getElementById("productForm").reset();
         document.getElementById("modalTitle").textContent = "Add New Product";
         document.getElementById("productModal").style.display = "none";
@@ -53,7 +51,40 @@ document.addEventListener("DOMContentLoaded", () => {
         populateProductTable();
     }
 
-    // Handle edit button click
+    // New: Handle Order Form Submit
+    function handleOrderFormSubmit(event) {
+        event.preventDefault();
+
+        const orderNumber = document.getElementById("orderNumber").value;
+        const orderProduct = document.getElementById("orderProduct").value;
+        const orderQuantity = parseInt(document.getElementById("orderQuantity").value);
+        const orderDate = document.getElementById("orderDate").value;
+
+        orders.push({ orderNumber, orderProduct, orderQuantity, orderDate });
+
+        document.getElementById("orderForm").reset();
+        document.getElementById("orderModal").style.display = "none";
+
+        console.log("Orders:", orders); // Optional: Print orders to console for testing
+    }
+
+    // New: Handle Supplier Form Submit
+    function handleSupplierFormSubmit(event) {
+        event.preventDefault();
+
+        const supplierName = document.getElementById("supplierName").value;
+        const supplierContact = document.getElementById("supplierContact").value;
+        const supplierEmail = document.getElementById("supplierEmail").value;
+
+        suppliers.push({ supplierName, supplierContact, supplierEmail });
+
+        document.getElementById("supplierForm").reset();
+        document.getElementById("supplierModal").style.display = "none";
+
+        console.log("Suppliers:", suppliers); // Optional: Print suppliers to console for testing
+    }
+
+    // Handle edit button click for products
     function handleEditButtonClick(index) {
         const product = products[index];
         document.getElementById("productName").value = product.name;
@@ -61,25 +92,33 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("quantity").value = product.quantity;
         document.getElementById("price").value = product.price;
 
-        currentEditIndex = index; // Set the current edit index
+        currentEditIndex = index;
         document.getElementById("modalTitle").textContent = "Edit Product";
         document.getElementById("productModal").style.display = "block";
     }
 
-    // Handle delete button click
+    // Handle delete button click for products
     function handleDeleteButtonClick(index) {
-        products.splice(index, 1); // Remove product from the array
+        products.splice(index, 1);
         populateProductTable();
     }
 
-    // Event listener for buttons
+    // Event listener for modal buttons
     function handleButtonClicks() {
         document.addEventListener("click", (e) => {
             if (e.target.id === "addProductBtn") {
-                currentEditIndex = -1; // Reset edit index for adding new product
+                currentEditIndex = -1; 
                 document.getElementById("productForm").reset();
                 document.getElementById("modalTitle").textContent = "Add New Product";
                 document.getElementById("productModal").style.display = "block";
+            } else if (e.target.id === "addOrderBtn") {
+                document.getElementById("orderForm").reset();
+                document.getElementById("orderModalTitle").textContent = "Create New Order";
+                document.getElementById("orderModal").style.display = "block";
+            } else if (e.target.id === "addSupplierBtn") {
+                document.getElementById("supplierForm").reset();
+                document.getElementById("supplierModalTitle").textContent = "Add New Supplier";
+                document.getElementById("supplierModal").style.display = "block";
             } else if (e.target.classList.contains("edit-btn")) {
                 const index = e.target.dataset.index;
                 handleEditButtonClick(index);
@@ -87,12 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const index = e.target.dataset.index;
                 handleDeleteButtonClick(index);
             } else if (e.target.classList.contains("close")) {
-                document.getElementById("productModal").style.display = "none";
+                e.target.closest(".modal").style.display = "none";
             }
         });
     }
 
-    // Initializing event listeners and handling form submission
     document.getElementById("productForm").addEventListener("submit", handleProductFormSubmit);
+    document.getElementById("orderForm").addEventListener("submit", handleOrderFormSubmit);
+    document.getElementById("supplierForm").addEventListener("submit", handleSupplierFormSubmit);
     handleButtonClicks();
 });

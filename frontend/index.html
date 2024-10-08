@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management System</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <header>
         <h1>SupplySync</h1>
@@ -15,9 +17,11 @@
                 <li><a href="#products">Products</a></li>
                 <li><a href="#orders">Orders</a></li>
                 <li><a href="#suppliers">Suppliers</a></li>
+                <li><a href="login.html">Logout</a></li>
             </ul>
         </nav>
     </header>
+    
 
     <div class="container">
         <aside>
@@ -26,6 +30,8 @@
                 <li><a href="#addProduct">Add Product</a></li>
                 <li><a href="#addOrder">Create Order</a></li>
                 <li><a href="#addSupplier">Add Supplier</a></li>
+                <li><a href="login.html">Login</a></li> <!-- New Link -->
+                <li><a href="signup.html">Sign Up</a></li> <!-- New Link -->
             </ul>
         </aside>
 
@@ -97,7 +103,11 @@
 
     <footer>
         <p>&copy; 2024 Inventory Management System</p>
-    </footer>
+        <ul>
+            <li><a href="login.html">Login</a></li> <!-- New Link -->
+            <li><a href="signup.html">Sign Up</a></li> <!-- New Link -->
+        </ul>
+    </footer>    
 
     <!-- Modal for adding/editing products -->
     <div id="productModal" class="modal">
@@ -117,7 +127,55 @@
             </form>
         </div>
     </div>
+    <!-- Add New Order Modal -->
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="orderModalTitle">Create New Order</h2>
+        <form id="orderForm">
+            <label for="orderNumber">Order Number</label>
+            <input type="text" id="orderNumber" name="orderNumber" required>
+
+            <label for="orderProduct">Product</label>
+            <input type="text" id="orderProduct" name="orderProduct" required>
+
+            <label for="orderQuantity">Quantity</label>
+            <input type="number" id="orderQuantity" name="orderQuantity" required>
+
+            <label for="orderDate">Order Date</label>
+            <input type="date" id="orderDate" name="orderDate" required>
+
+            <button type="submit">Save Order</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add New Supplier Modal -->
+<div id="supplierModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="supplierModalTitle">Add New Supplier</h2>
+        <form id="supplierForm">
+            <label for="supplierName">Supplier Name</label>
+            <input type="text" id="supplierName" name="supplierName" required>
+
+            <label for="supplierContact">Contact Number</label>
+            <input type="text" id="supplierContact" name="supplierContact" required>
+
+            <label for="supplierEmail">Email</label>
+            <input type="email" id="supplierEmail" name="supplierEmail" required>
+
+            <button type="submit">Save Supplier</button>
+        </form>
+    </div>
+</div>
+
+<!-- New Order and Supplier Buttons
+<button id="addOrderBtn">Create New Order</button>
+<button id="addSupplierBtn">Add New Supplier</button> -->
+
 
     <script src="script.js"></script>
 </body>
+
 </html>
